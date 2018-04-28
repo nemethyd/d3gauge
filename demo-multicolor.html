@@ -1,0 +1,61 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+        <title>d3gauge demo</title>
+
+		<script type="text/javascript" src="//d3js.org/d3.v4.min.js" charset="utf-8"></script>
+		<script type="text/javascript" src="d3gauge.js" charset="utf-8"></script>
+	</head>
+	<body style="{background-color: #222;}">
+		<div id="gaugeBox"></div>
+	</body>
+
+	<script> 
+		col_red = '#E71D36';
+		var gauges  = [];
+		var opt = {
+		  gaugeRadius : 160,
+		  minVal : 0,
+		  maxVal : 9.5,
+		  padding: 0.03,
+		  edgeWidth: 0.03,
+		  needleVal : Math.round(3),
+		  zeroTickAngle: 90,
+		  tickLengthMaj: 0.16,
+		  tickWidthMaj: 2,
+		  tickLengthMaj: 0.16,
+		  tickWidthMin: 1,
+		  needleTickGap: 0.03,
+		  needleLengthNeg: 0.2,
+		  needleWidth : 4,
+		  labelFontSize: 24,
+		  pivotRadius: 0.1,
+		  tickSpaceMinVal : .25,
+		  tickSpaceMajVal : 1, 
+		  divID : "gaugeBox", 
+		  // colors
+		  tickColMaj: "#fff",
+		  tickColMin: "#fff",
+		  outerEdgeCol: col_red,
+		  pivotCol: "#ccc",
+		  innerCol: "#444",
+		  unitsLabelCol: "none",
+		  tickLabelCol: "none",
+		  needleCol: col_red,
+		  tickFont: "Arial Black",
+		  unitsFont: "Lucida Console",
+		  gaugeUnits : "x1000 RPM",
+	      colorRanges: {
+    		0: "#fff",
+    		6: "#FF9F1C",
+    		8.2: "#E71D36"
+    	  }
+		};
+		            
+		gauges[0] = new drawGauge(opt);
+
+	</script>
+
+
+
+</html>

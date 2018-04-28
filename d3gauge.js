@@ -1,3 +1,4 @@
+/* global d3 */
 function drawGauge(opt) {
     // Set defaults if not supplied
     if(typeof opt === 'undefined')                  {var opt={}}
@@ -38,10 +39,12 @@ function drawGauge(opt) {
     if(typeof opt.tickLabelCol === 'undefined')     {opt.tickLabelCol = '#000'}
     if(typeof opt.needleCol === 'undefined')        {opt.needleCol = '#0099CC'}
 
-    defaultFonts = '"Helvetica Neue", Helvetica, Arial, sans-serif'
-    if(typeof opt.tickFont === 'undefined')        {opt.tickFont = defaultFonts}
-    if(typeof opt.unitsFont === 'undefined')        {opt.unitsFont = defaultFonts}
+    var defaultFonts = '"Helvetica Neue", Helvetica, Arial, sans-serif'
+    if(typeof opt.tickFont === 'undefined')         {opt.tickFont = defaultFonts};
+    if(typeof opt.unitsFont === 'undefined')        {opt.unitsFont = defaultFonts};
 
+    if(typeof opt.colorRanges === 'undefined')      {opt.colorRanges = {}};
+    
     // Calculate absolute values
     opt.padding = opt.padding * opt.gaugeRadius,
     opt.edgeWidth = opt.edgeWidth * opt.gaugeRadius,
@@ -217,19 +220,51 @@ function drawGauge(opt) {
     var ticksMaj = ticks.append("svg:g")
                 .attr("id","majorTickMarks")
 
+    // keep track of the total tick count
+    var majCount = 0;
+    var minCount = 0;
+    var minsPerMax = (opt.tickSpaceMajVal / opt.tickSpaceMinVal) - 1;
+
+    function getMajColorFromRange(value) {
+      var thisColor = opt.tickColMaj;
+      for(var key in opt.colorRanges){
+        var newColor = opt.colorRanges[key];
+        if (majCount >= key ) { thisColor = newColor;}
+      }
+      return thisColor;
+    }
     
+    function getMinColorFromRange(value) {
+      var thisColor = opt.tickColMin;
+      for(var key in opt.colorRanges){
+        var newColor = opt.colorRanges[key];
+        if ((minCount /  minsPerMax) >= key) { thisColor = newColor;}
+      }
+      return thisColor;
+    }
+  
     //Draw the tick marks 
     var tickMin = ticksMin.selectAll("path")
                 .data(tickAnglesMin)
                 .enter().append("path")
                 .attr("d", pathTickMin)
-                .style("stroke", opt.tickColMin)
+// if the count is greater than a configured level, change the color
+                .style("stroke", function() {
+                    var res = getMinColorFromRange(minCount);
+                    minCount++;
+                    return res;
+                })
                 .style("stroke-width", opt.tickWidthMin+"px");    
     var tickMaj = ticksMaj.selectAll("path")
                 .data(tickAnglesMaj)
                 .enter().append("path")
                 .attr("d", pathTickMaj)
-                .style("stroke", opt.tickColMaj)
+// if the count is greater than a configured level, change the color
+                .style("stroke", function() {
+                    var res = getMajColorFromRange(majCount)
+                    majCount++;
+                    return res;
+                })
                 .style("stroke-width", opt.tickWidthMaj+"px");  
     
     
