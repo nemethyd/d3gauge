@@ -25,6 +25,10 @@ function drawGauge(opt) {
     if(typeof opt.tickWidthMaj === 'undefined')     {opt.tickWidthMaj=3}
     if(typeof opt.tickWidthMin === 'undefined')     {opt.tickWidthMin=1}
     if(typeof opt.labelFontSize === 'undefined')    {opt.labelFontSize=18}
+    if(typeof opt.labelPadding === 'undefined')    {opt.labelPadding=opt.labelFontSize}
+    if(typeof opt.unitsFontSize === 'undefined')    {opt.unitsFontSize=opt.labelFontSize}
+    if(typeof opt.labelFontWeight === 'undefined')  {opt.labelFontWeight="bold"}
+    if(typeof opt.unitsFontWeight === 'undefined')  {opt.unitsFontWeight=opt.labelFontWeight}
     if(typeof opt.zeroTickAngle === 'undefined')    {opt.zeroTickAngle=60}
     if(typeof opt.maxTickAngle === 'undefined')     {opt.maxTickAngle=300}
     if(typeof opt.zeroNeedleAngle === 'undefined')  {opt.zeroNeedleAngle=40}
@@ -43,7 +47,7 @@ function drawGauge(opt) {
     if(typeof opt.tickFont === 'undefined')         {opt.tickFont = defaultFonts};
     if(typeof opt.unitsFont === 'undefined')        {opt.unitsFont = defaultFonts};
 
-    if(typeof opt.colorRanges === 'undefined')      {opt.colorRanges = {}};
+    if(typeof opt.colorRanges === 'undefined')      {opt.colorRanges = {};};
     
     // Calculate absolute values
     opt.padding = opt.padding * opt.gaugeRadius,
@@ -67,7 +71,7 @@ function drawGauge(opt) {
         needlePathStart = opt.needleLengthNeg * (-1),
         tickStartMaj = opt.gaugeRadius - opt.padding - opt.edgeWidth - opt.tickEdgeGap - opt.tickLengthMaj,
         tickStartMin = opt.gaugeRadius - opt.padding - opt.edgeWidth - opt.tickEdgeGap - opt.tickLengthMin,
-        labelStart = tickStartMaj - opt.labelFontSize,
+        labelStart = tickStartMaj - opt.labelPadding,
         innerEdgeRadius = opt.gaugeRadius - opt.padding - opt.edgeWidth,
         outerEdgeRadius = opt.gaugeRadius - opt.padding,
         originX = opt.gaugeRadius,
@@ -206,8 +210,8 @@ function drawGauge(opt) {
         return pathCalc;
     };    
     
-   var  pathTickMaj = tickCalcMaj(),
-        pathTickMin = tickCalcMin();
+   var  pathTickMaj = tickCalcMaj();
+   var  pathTickMin = tickCalcMin();
 
     
     //Add a group to hold the ticks
@@ -223,22 +227,32 @@ function drawGauge(opt) {
     // keep track of the total tick count
     var majCount = 0;
     var minCount = 0;
-    var minsPerMax = (opt.tickSpaceMajVal / opt.tickSpaceMinVal) - 1;
+    var minsPerMax = (opt.tickSpaceMajVal / opt.tickSpaceMinVal);
 
     function getMajColorFromRange(value) {
       var thisColor = opt.tickColMaj;
-      for(var key in opt.colorRanges){
+      var highest_so_far = 0;
+      for(var key in opt.colorRanges) {
         var newColor = opt.colorRanges[key];
-        if (majCount >= key ) { thisColor = newColor;}
+        if ((majCount >= key) && (key > highest_so_far)) { 
+            thisColor = newColor;
+            highest_so_far = key;
+        }
       }
       return thisColor;
     }
     
     function getMinColorFromRange(value) {
       var thisColor = opt.tickColMin;
+      var highest_so_far = 0;
+      console.log(value)
       for(var key in opt.colorRanges){
+        console.log("Key: " + key)
         var newColor = opt.colorRanges[key];
-        if ((minCount /  minsPerMax) >= key) { thisColor = newColor;}
+        if (((minCount /  minsPerMax) >= key) && (key > highest_so_far)) {
+            thisColor = newColor;
+            highest_so_far = key;
+        }
       }
       return thisColor;
     }
@@ -270,10 +284,9 @@ function drawGauge(opt) {
     
     //Define functions to calcuate the positions of the labels for the tick marks
     function labelXcalc(d,i){
-        var tickAngle = d+90,
-            tickAngleRad = dToR(tickAngle),
-            labelW = opt.labelFontSize / (tickLabelText[i].toString().length / 2)
-            x1 = originX + ((labelStart - labelW) * Math.cos(tickAngleRad));
+        var tickAngle = d + 90;
+        var tickAngleRad = dToR(tickAngle);
+        var x1 = originX + (labelStart * Math.cos(tickAngleRad));
         return x1
     }
     function labelYcalc(d,i){
@@ -294,7 +307,7 @@ function drawGauge(opt) {
                 .attr("font-size", opt.labelFontSize) 
                 .attr("text-anchor", "middle")
                 .style("fill", opt.tickLabelCol)
-                .style("font-weight", "bold")
+                .style("font-weight", opt.labelFontWeight)
                 .attr("font-family", opt.tickFont)
                 .text(function(d,i) {return tickLabelText[i]})
     
@@ -306,10 +319,10 @@ function drawGauge(opt) {
                 .enter().append("text")
                 .attr("x",function(d,i){return labelXcalc(d,i)})
                 .attr("y",function(d,i){return labelYcalc(d,i)})    
-                .attr("font-size", opt.labelFontSize * 1.5) 
+                .attr("font-size", opt.unitsFontSize) 
                 .attr("text-anchor", "middle")
                 .style("fill", opt.unitsLabelCol)
-                .style("font-weight", "bold")
+                .style("font-weight", opt.unitsFontWeight)
                 .attr("font-family", opt.unitsFont)
                 .text(opt.gaugeUnits)           
 
@@ -317,7 +330,7 @@ function drawGauge(opt) {
     var needleAngle = [opt.zeroNeedleAngle]
     
     //Define a function for calculating the coordinates of the needle paths (see tick mark equivalent)
-    needleCalc = function() {   
+    var needleCalc = function() {   
             function pathCalc(d,i) {
                 var nAngleRad = dToR(d + 90)
                 
@@ -396,8 +409,8 @@ function drawGauge(opt) {
             .ease(d3.easeElasticOut,1,0.9)
             .attrTween("transform", function(d,i,a)
             {
-                needleAngleOld = valueScale(oldVal) - opt.zeroNeedleAngle
-                needleAngleNew = valueScale(newVal) - opt.zeroNeedleAngle
+                var needleAngleOld = valueScale(oldVal) - opt.zeroNeedleAngle
+                var needleAngleNew = valueScale(newVal) - opt.zeroNeedleAngle
 
                 //Check for min/max ends of the needle
                 if (needleAngleOld + opt.zeroNeedleAngle > opt.maxTickAngle){needleAngleOld = opt.maxNeedleAngle - opt.zeroNeedleAngle}

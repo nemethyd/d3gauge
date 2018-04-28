@@ -2,57 +2,114 @@
 	<head>
 		<meta charset="utf-8">
         <title>d3gauge demo</title>
-
+<link href="https://fonts.googleapis.com/css?family=Play" rel="stylesheet">
 		<script type="text/javascript" src="//d3js.org/d3.v4.min.js" charset="utf-8"></script>
 		<script type="text/javascript" src="d3gauge.js" charset="utf-8"></script>
 	</head>
 	<body style="{background-color: #222;}">
 		<div id="gaugeBox"></div>
+		<div id="allTheColorsBox"></div>
 	</body>
 
 	<script> 
-		col_red = '#E71D36';
+		var col_red = '#FA5E71';
 		var gauges  = [];
 		var opt = {
+		  divID : "gaugeBox", 
 		  gaugeRadius : 160,
 		  minVal : 0,
 		  maxVal : 9.5,
 		  padding: 0.03,
 		  edgeWidth: 0.03,
-		  needleVal : Math.round(3),
+		  needleVal : 6.5,
 		  zeroTickAngle: 90,
 		  tickLengthMaj: 0.16,
-		  tickWidthMaj: 2,
-		  tickLengthMaj: 0.16,
-		  tickWidthMin: 1,
+		  tickWidthMaj: 4,
+		  tickLengthMin: 0.06,
+		  tickWidthMin: 2,
 		  needleTickGap: 0.03,
 		  needleLengthNeg: 0.2,
-		  needleWidth : 4,
-		  labelFontSize: 24,
-		  pivotRadius: 0.1,
-		  tickSpaceMinVal : .25,
+		  needleWidth : 5,
+		  labelFontSize: 48,
+		  labelPadding: 24,
+		  unitsFontSize: 16,
+		  unitsFontWeight: "100",
+		  labelFontWeight: "100",
+		  pivotRadius: 0.06,
+		  tickSpaceMinVal : .2,
 		  tickSpaceMajVal : 1, 
-		  divID : "gaugeBox", 
 		  // colors
 		  tickColMaj: "#fff",
 		  tickColMin: "#fff",
-		  outerEdgeCol: col_red,
+		  outerEdgeCol: "#ccc",
 		  pivotCol: "#ccc",
-		  innerCol: "#444",
-		  unitsLabelCol: "none",
-		  tickLabelCol: "none",
-		  needleCol: col_red,
-		  tickFont: "Arial Black",
-		  unitsFont: "Lucida Console",
+		  innerCol: "#040E1A",
+		  unitsLabelCol: "#fff",
+		  tickLabelCol: "#fff",
+		  needleCol: "red",
+		  tickFont: "Play",
+		  unitsFont: "Arial Black",
 		  gaugeUnits : "x1000 RPM",
 	      colorRanges: {
-    		0: "#fff",
-    		6: "#FF9F1C",
-    		8.2: "#E71D36"
+    		6.5: "#e1e510",
+    		7.5: "#FF6C2C",
+    		8.5: "#F00"
     	  }
 		};
+
+		var allTheColors = {
+		  divID : "allTheColorsBox", 
+		  gaugeRadius : 160,
+		  minVal : 0,
+		  maxVal : 9.5,
+		  padding: 0.03,
+		  edgeWidth: 0.03,
+		  needleVal : 4,
+		  zeroTickAngle: 90,
+		  tickLengthMaj: 0.16,
+		  tickWidthMaj: 4,
+		  tickLengthMin: 0.06,
+		  tickWidthMin: 2,
+		  needleTickGap: 0.03,
+		  needleLengthNeg: 0.2,
+		  needleWidth : 5,
+		  labelFontSize: 34,
+		  labelFontWeight: "100",
+		  labelPadding: 20,
+		  unitsFontSize: 16,
+		  unitsFontWeight: "100",
+		  pivotRadius: 0.06,
+		  tickSpaceMinVal : .2,
+		  tickSpaceMajVal : 1, 
+		  // colors
+		  tickColMaj: "#fff",
+		  tickColMin: "#fff",
+		  outerEdgeCol: "#ccc",
+		  pivotCol: "#222",
+		  innerCol: "#555",
+		  unitsLabelCol: "#fff",
+		  tickLabelCol: "#fff",
+		  needleCol: "red",
+		  tickFont: "Arial Black",
+		  unitsFont: "Arial Black",
+		  gaugeUnits : "RAiNBOWZ",
+	      colorRanges: {
+    		0: "red",
+    		1: "#E2571E",
+    		2: "orange",
+    		3: "yellow",
+    		4: "green",
+    		5: "#96bf33",
+    		6: "blue",
+    		7: "indigo",
+    		8: "violet",
+    		9: "white"
+    	  }
+		};
+	
 		            
 		gauges[0] = new drawGauge(opt);
+		gauges[1] = new drawGauge(allTheColors);
 
 	</script>
 
