@@ -3,6 +3,8 @@ function drawGauge(opt) {
     // Set defaults if not supplied
     if(typeof opt === 'undefined')                  {var opt={}}
     if(typeof opt.gaugeRadius === 'undefined')      {opt.gaugeRadius=200}
+    if(typeof opt.offsetX === 'undefined')          {opt.offsetX=0}
+    if(typeof opt.offsetY === 'undefined')          {opt.offsetY=0}
     if(typeof opt.minVal === 'undefined')           {opt.minVal=0}
     if(typeof opt.maxVal === 'undefined')           {opt.maxVal=100}
     if(typeof opt.tickSpaceMinVal === 'undefined')  {opt.tickSpaceMinVal=1}
@@ -24,15 +26,30 @@ function drawGauge(opt) {
     if(typeof opt.needleWidth === 'undefined')      {opt.needleWidth=5}
     if(typeof opt.tickWidthMaj === 'undefined')     {opt.tickWidthMaj=3}
     if(typeof opt.tickWidthMin === 'undefined')     {opt.tickWidthMin=1}
+    
     if(typeof opt.labelFontSize === 'undefined')    {opt.labelFontSize=18}
-    if(typeof opt.labelPadding === 'undefined')    {opt.labelPadding=opt.labelFontSize}
+    if(typeof opt.labelPadding === 'undefined')     {opt.labelPadding=opt.labelFontSize}
     if(typeof opt.unitsFontSize === 'undefined')    {opt.unitsFontSize=opt.labelFontSize}
     if(typeof opt.labelFontWeight === 'undefined')  {opt.labelFontWeight="bold"}
     if(typeof opt.unitsFontWeight === 'undefined')  {opt.unitsFontWeight=opt.labelFontWeight}
+    if(typeof opt.titleOffsetX === 'undefined')     {opt.titleOffsetX=0}
+    if(typeof opt.titleOffsetY === 'undefined')     {opt.titleOffsetY=0}
+    if(typeof opt.titleFontSize === 'undefined')    {opt.titleFontSize=opt.labelFontSize}
+    if(typeof opt.titleTextAnchor === 'undefined')  {opt.titleTextAnchor="middle"}
+    if(typeof opt.titleFontWeight === 'undefined')  {opt.titleFontWeight="bold"}
+    if(typeof opt.titleFontFamily === 'undefined')  {opt.titleFontFamily="Play"}
+    if(typeof opt.titleText === 'undefined')        {opt.titleText=""}
+    if(typeof opt.dropShadowBlur === 'undefined')   {opt.dropShadowBlur=5}
+    if(typeof opt.dropShadowHeight === 'undefined') {opt.dropShadowHeight="130%"}
+    if(typeof opt.dropShadowDistanceX === 'undefined') {opt.dropShadowDistanceX=5}
+    if(typeof opt.dropShadowDistanceY === 'undefined') {opt.dropShadowDistanceY=5}
+    
+
     if(typeof opt.zeroTickAngle === 'undefined')    {opt.zeroTickAngle=60}
     if(typeof opt.maxTickAngle === 'undefined')     {opt.maxTickAngle=300}
     if(typeof opt.zeroNeedleAngle === 'undefined')  {opt.zeroNeedleAngle=40}
     if(typeof opt.maxNeedleAngle === 'undefined')   {opt.maxNeedleAngle=320}
+    if(typeof opt.animDuration === 'undefined')     {opt.animDuration=1000}
 
     if(typeof opt.tickColMaj === 'undefined')       {opt.tickColMaj = '#0099CC'}
     if(typeof opt.tickColMin === 'undefined')       {opt.tickColMin = '#000'}
@@ -42,6 +59,7 @@ function drawGauge(opt) {
     if(typeof opt.unitsLabelCol === 'undefined')    {opt.unitsLabelCol = '#000'}
     if(typeof opt.tickLabelCol === 'undefined')     {opt.tickLabelCol = '#000'}
     if(typeof opt.needleCol === 'undefined')        {opt.needleCol = '#0099CC'}
+    if(typeof opt.titleCol === 'undefined')         {opt.titleCol="#000"}
 
     var defaultFonts = '"Helvetica Neue", Helvetica, Arial, sans-serif'
     if(typeof opt.tickFont === 'undefined')         {opt.tickFont = defaultFonts};
@@ -73,10 +91,10 @@ function drawGauge(opt) {
         tickStartMin = opt.gaugeRadius - opt.padding - opt.edgeWidth - opt.tickEdgeGap - opt.tickLengthMin,
         labelStart = tickStartMaj - opt.labelPadding,
         innerEdgeRadius = opt.gaugeRadius - opt.padding - opt.edgeWidth,
-        outerEdgeRadius = opt.gaugeRadius - opt.padding,
-        originX = opt.gaugeRadius,
-        originY = opt.gaugeRadius;
-    
+        outerEdgeRadius = opt.gaugeRadius - opt.padding;
+    var originX = opt.gaugeRadius + opt.offsetX + opt.dropShadowDistanceX;
+    var originY = opt.gaugeRadius + opt.offsetY + opt.dropShadowDistanceY;
+
     if(opt.labelFontSize < 6){opt.labelFontSize = 0}
         
     //Define a linear scale to convert values to needle displacement angle (degrees)
@@ -124,12 +142,12 @@ function drawGauge(opt) {
     //Add the svg content holder to the visualisation box element in the document (vizbox)
     var svgWidth=opt.gaugeRadius * 2,
         svgHeight=opt.gaugeRadius * 2;
-    
+    // set width taking into account any potential drop shadow. Make sure to 0 out drop shadow for smaller padding
     d3.select("#" + opt.divID)
         .append("svg")
         .attr("id", "SVGbox-" + opt.divID)
-        .attr("width", svgWidth)
-        .attr("height", svgHeight)
+        .attr("width", svgWidth + opt.offsetX + (2 * (opt.dropShadowDistanceX + opt.dropShadowBlur)))
+        .attr("height", svgHeight + opt.offsetY + (2 * (opt.dropShadowDistanceY + opt.dropShadowBlur)))
         .attr({'xmlns': 'http://www.w3.org/2000/svg','xmlns:xlink': 'http://www.w3.org/1999/xlink'});
     
     var svg = d3.select("#SVGbox-" + opt.divID);
@@ -141,6 +159,7 @@ function drawGauge(opt) {
             .attr("cx", originX)
             .attr("cy", originY)
             .attr("r", outerEdgeRadius)
+            .style("filter", "url(#drop-shadow)")
             .style("fill", opt.outerEdgeCol)
             .style("stroke", "none");
     var innerC = circleGroup.append("svg:circle")
@@ -324,7 +343,54 @@ function drawGauge(opt) {
                 .style("fill", opt.unitsLabelCol)
                 .style("font-weight", opt.unitsFontWeight)
                 .attr("font-family", opt.unitsFont)
-                .text(opt.gaugeUnits)           
+                .text(opt.gaugeUnits)      
+
+    //Add label for Title
+    var titleLabels = svg.append("svg:g")
+                .attr("id", "logoLabel")
+    var titleLabel = titleLabels.selectAll("text")
+                .data([0])
+                .enter().append("text")
+                .attr("x",opt.titleOffsetX)
+                .attr("y",opt.titleOffsetY)    
+                .attr("font-size", opt.titleFontSize) 
+                .attr("text-anchor", opt.titleTextAnchor)
+                .style("fill", opt.titleCol)
+                .style("font-weight", opt.titleFontWeight)
+                .style("filter", "url(#drop-shadow)")
+                .attr("font-family", opt.titleFontFamily)
+                .text("ThemeReports") 
+    // How about a drop shadow?
+    // from http://bl.ocks.org/cpbotha/5200394
+    var defs = svg.append("defs");
+    var filter = defs.append("filter")
+    .attr("id", "drop-shadow")
+    .attr("height", opt.dropShadowHeight);
+
+    // SourceAlpha refers to opacity of graphic that this filter will be applied to
+    // convolve that with a Gaussian with standard deviation 3 and store result
+    // in blur
+    filter.append("feGaussianBlur")
+        .attr("in", "SourceAlpha")
+        .attr("stdDeviation", opt.dropShadowBlur)
+        .attr("result", "blur");
+    
+    // translate output of Gaussian blur to the right and downwards with 2px
+    // store result in offsetBlur
+    filter.append("feOffset")
+        .attr("in", "blur")
+        .attr("dx", opt.dropShadowDistanceX)
+        .attr("dy", opt.dropShadowDistanceY)
+        .attr("result", "offsetBlur");
+    
+    // overlay original SourceGraphic over translated blurred opacity by using
+    // feMerge filter. Order of specifying inputs is important!
+    var feMerge = filter.append("feMerge");
+    
+    feMerge.append("feMergeNode")
+        .attr("in", "offsetBlur")
+    feMerge.append("feMergeNode")
+        .attr("in", "SourceGraphic");
 
     //Draw needle
     var needleAngle = [opt.zeroNeedleAngle]
@@ -368,7 +434,7 @@ function drawGauge(opt) {
     
     //Animate the transistion of the needle to its starting value
     needlePath.transition()
-        .duration(1000)
+        .duration(opt.animDuration)
         //.delay(0)
         .ease(d3.easeElasticOut,1,0.9)
         //.attr("transform", function(d) 
