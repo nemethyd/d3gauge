@@ -234,7 +234,7 @@ function drawGauge(opt) {
       var highest_so_far = 0;
       for(var key in opt.colorRanges) {
         var newColor = opt.colorRanges[key];
-        if ((majCount >= key) && (key > highest_so_far)) { 
+        if ((majCount >= key) && (key >= highest_so_far)) { 
             thisColor = newColor;
             highest_so_far = key;
         }
@@ -249,7 +249,7 @@ function drawGauge(opt) {
       for(var key in opt.colorRanges){
         console.log("Key: " + key)
         var newColor = opt.colorRanges[key];
-        if (((minCount /  minsPerMax) >= key) && (key > highest_so_far)) {
+        if (((minCount /  minsPerMax) >= key) && (key >= highest_so_far)) {
             thisColor = newColor;
             highest_so_far = key;
         }
