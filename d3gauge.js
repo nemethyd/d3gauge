@@ -47,7 +47,7 @@ function drawGauge(opt) {
     if(typeof opt.tickFont === 'undefined')         {opt.tickFont = defaultFonts};
     if(typeof opt.unitsFont === 'undefined')        {opt.unitsFont = defaultFonts};
 
-    if(typeof opt.colorRanges === 'undefined')      {opt.colorRanges = {};};
+    if(typeof opt.colRanges === 'undefined')      {opt.colRanges = {};};
     
     // Calculate absolute values
     opt.padding = opt.padding * opt.gaugeRadius,
@@ -232,8 +232,8 @@ function drawGauge(opt) {
     function getMajColorFromRange(value) {
       var thisColor = opt.tickColMaj;
       var highest_so_far = 0;
-      for(var key in opt.colorRanges) {
-        var newColor = opt.colorRanges[key];
+      for(var key in opt.colRanges) {
+        var newColor = opt.colRanges[key];
         if ((majCount >= key) && (key >= highest_so_far)) { 
             thisColor = newColor;
             highest_so_far = key;
@@ -246,9 +246,9 @@ function drawGauge(opt) {
       var thisColor = opt.tickColMin;
       var highest_so_far = 0;
       console.log(value)
-      for(var key in opt.colorRanges){
+      for(var key in opt.colRanges){
         console.log("Key: " + key)
-        var newColor = opt.colorRanges[key];
+        var newColor = opt.colRanges[key];
         if (((minCount /  minsPerMax) >= key) && (key >= highest_so_far)) {
             thisColor = newColor;
             highest_so_far = key;

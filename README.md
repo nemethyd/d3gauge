@@ -1,12 +1,19 @@
 # d3gauge-multicolor
+**d3gauge-multicolor** is a fork of [d3guage.js](https://github.com/oliverbinns/d3gauge) that adds the ability to configure any number of specific colour ranges to the ticks.
 
-**d3gauge-multicolor.js** is an add-in for the [D3](http://d3js.org) javascript library for drawing gauges, based on the [google charts gauge](https://developers.google.com/chart/interactive/docs/gallery/gauge) and [this javascript implementation](http://tomerdoron.blogspot.nl/2011/12/google-style-gauges-using-d3js.html). Every aspect of a d3gauge (sizes, colours, fonts) can be customised by passing an object containing options (see below).  
+**d3gauge.js** is an add-in for the [D3](http://d3js.org) javascript library for drawing gauges, based on the [google charts gauge](https://developers.google.com/chart/interactive/docs/gallery/gauge) and [this javascript implementation](http://tomerdoron.blogspot.nl/2011/12/google-style-gauges-using-d3js.html). Every aspect of a d3gauge (sizes, colours, fonts) can be customised by passing an object containing options (see below).  
+
+
 
 The gauge values can be easily updated, and the needle moves with an 'rubber-band' effect.  The gauge is a javascript object, so it is possible to have multiple gauges in one document.
 
 Styles are set by inline style arguments, rather than CSS classes so that (i) multiple gauges can have different styles and (ii) svg gauges can be saved as images using tools like [canvg](https://github.com/gabelerner/canvg)
 
-![Example gauge](https://github.com/oliverbinns/d3gauge/blob/master/docs/example.png "Example gauge")
+![Example gauge](https://github.com/oliverbinns/d3gauge/blob/master/docs/example.png "Original gauge")
+
+[Multicolor Guage Example](https://github.com/thursby/d3gauge/blob/master/docs/example-multicolor.png "Multicolor Example 1")
+
+[Multicolor Guage Example 2](https://github.com/thursby/d3gauge/blob/master/docs/example-multicolor-rainbowz.png "Multicolor Example 2")
 
 I have written a more detailed post on how the code works on my blog, [here](http://oliverbinns.com/articles/D3js-gauge/), which includes a live example. There is a also a guide to rasterising the gauge as a png file in the browser [here](http://oliverbinns.com/articles/rasterising-SVG-in-the-browser/).
 
@@ -76,6 +83,8 @@ The following options can be set:
 * **tickWidthMaj** - Widths of the major tick marks in pixels
 * **tickWidthMin** - Width of the minor tick marks in pixels
 * **labelFontSize** - Size of the tick mark labels in pixels
+* **labelPadding** - Pixels of padding between the tick labels and the ticks
+* **unitsFontSize** - Size of the units display, same as labelFontSize by default
 * **zeroTickAngle** - The position angle (in degrees) of the lowest value tick
 * **maxTickAngle** - The position angle (in degrees) of the highest value tick
 * **zeroNeedleAngle** - The lowest needle angle.  If a needleVal < minVal is set, then the needle will go to this position.
@@ -92,6 +101,26 @@ The following options can be set:
 * **needleCol** - The colour of the needle
 * **tickFont** - The font of the tick labels
 * **unitsFont** - The font of the units text, at the bottom of the gauge
+* **colRanges** - Optional colored ticks for specific ranges. If the needleVal 
+   is greater than the provided key in this associative array, the 
+   value will be assigned as the color.
+
+### Example of colRanges
+```javascript
+colRanges: {
+    		0: "red",
+    		1: "#E2571E",
+    		2: "orange",
+    		3: "yellow",
+    		4: "green",
+    		5: "#96bf33",
+    		6: "blue",
+    		7: "indigo",
+    		8: "violet",
+    		9: "white"
+    	  }
+```
+See ```demo-multicolor.html``` for an example.
 
 ## More Info
 For more information on how the code works, see this [blog post](http://oliverbinns.com/articles/D3js-gauge/)
