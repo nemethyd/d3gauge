@@ -11,9 +11,9 @@ Styles are set by inline style arguments, rather than CSS classes so that (i) mu
 
 ![Example gauge](https://github.com/oliverbinns/d3gauge/blob/master/docs/example.png "Original gauge")
 
-[Multicolor Guage Example](https://github.com/thursby/d3gauge/blob/master/docs/example-multicolor.png "Multicolor Example 1")
+![Multicolor Guage Example](https://github.com/thursby/d3gauge/blob/master/docs/example-multicolor.png "Multicolor Example 1")
 
-[Multicolor Guage Example 2](https://github.com/thursby/d3gauge/blob/master/docs/example-multicolor-rainbowz.png "Multicolor Example 2")
+![Multicolor Guage Example 2](https://github.com/thursby/d3gauge/blob/master/docs/example-multicolor-rainbowz.png "Multicolor Example 2")
 
 I have written a more detailed post on how the code works on my blog, [here](http://oliverbinns.com/articles/D3js-gauge/), which includes a live example. There is a also a guide to rasterising the gauge as a png file in the browser [here](http://oliverbinns.com/articles/rasterising-SVG-in-the-browser/).
 
