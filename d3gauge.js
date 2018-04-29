@@ -268,7 +268,7 @@ function drawGauge(opt) {
       for(var key in opt.colRanges){
         console.log("Key: " + key)
         var newColor = opt.colRanges[key];
-        if (((minCount /  minsPerMax) >= key) && (key >= highest_so_far)) {
+        if (((minCount * opt.tickSpaceMinVal) + opt.minVal >= key) && (key >= highest_so_far)) {
             thisColor = newColor;
             highest_so_far = key;
         }
