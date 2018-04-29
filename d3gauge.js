@@ -345,7 +345,48 @@ function drawGauge(opt) {
                 .attr("font-family", opt.unitsFont)
                 .text(opt.gaugeUnits)      
 
-    //Add label for Title
+
+    //Draw needle
+    var needleAngle = [opt.zeroNeedleAngle]
+    
+    //Define a function for calculating the coordinates of the needle paths (see tick mark equivalent)
+    var needleCalc = function() {   
+            function pathCalc(d,i) {
+                var nAngleRad = dToR(d + 90)
+                
+                var y1 = originY + (needlePathStart * Math.sin(nAngleRad)),
+                    y2 = originY + ((needlePathStart + needlePathLength) * Math.sin(nAngleRad)),
+                    x1 = originX + (needlePathStart * Math.cos(nAngleRad)),
+                    x2 = originX + ((needlePathStart + needlePathLength) * Math.cos(nAngleRad)),
+                    
+                    lineData = [{"x": x1, "y": y1}, {"x": x2, "y": y2}];
+                
+                var lineFunc=d3.line()
+                    .x(function(d) {return d.x;})
+                    .y(function(d) {return d.y;});
+                
+                var lineSVG = lineFunc(lineData)
+                return lineSVG 
+            }
+        return pathCalc;
+    };
+    
+    var pathNeedle = needleCalc();
+
+    //Add a group to hold the needle path
+    var needleGroup = svg.append("svg:g")
+        .attr("id","needle")
+    
+    //Draw the needle path
+    var needlePath = needleGroup.selectAll("path")
+        .data(needleAngle)
+        .enter().append("path")
+        .attr("d", pathNeedle)
+        .style("stroke", opt.needleCol)
+        .style("stroke-width", opt.needleWidth + "px");  
+
+
+    //Add Title
     var titleLabels = svg.append("svg:g")
                 .attr("id", "logoLabel")
     var titleLabel = titleLabels.selectAll("text")
@@ -392,45 +433,6 @@ function drawGauge(opt) {
     feMerge.append("feMergeNode")
         .attr("in", "SourceGraphic");
 
-    //Draw needle
-    var needleAngle = [opt.zeroNeedleAngle]
-    
-    //Define a function for calculating the coordinates of the needle paths (see tick mark equivalent)
-    var needleCalc = function() {   
-            function pathCalc(d,i) {
-                var nAngleRad = dToR(d + 90)
-                
-                var y1 = originY + (needlePathStart * Math.sin(nAngleRad)),
-                    y2 = originY + ((needlePathStart + needlePathLength) * Math.sin(nAngleRad)),
-                    x1 = originX + (needlePathStart * Math.cos(nAngleRad)),
-                    x2 = originX + ((needlePathStart + needlePathLength) * Math.cos(nAngleRad)),
-                    
-                    lineData = [{"x": x1, "y": y1}, {"x": x2, "y": y2}];
-                
-                var lineFunc=d3.line()
-                    .x(function(d) {return d.x;})
-                    .y(function(d) {return d.y;});
-                
-                var lineSVG = lineFunc(lineData)
-                return lineSVG 
-            }
-        return pathCalc;
-    };
-    
-    var pathNeedle = needleCalc();
-
-    //Add a group to hold the needle path
-    var needleGroup = svg.append("svg:g")
-        .attr("id","needle")
-    
-    //Draw the needle path
-    var needlePath = needleGroup.selectAll("path")
-        .data(needleAngle)
-        .enter().append("path")
-        .attr("d", pathNeedle)
-        .style("stroke", opt.needleCol)
-        .style("stroke-width", opt.needleWidth + "px");  
-    
     
     //Animate the transistion of the needle to its starting value
     needlePath.transition()
