@@ -400,7 +400,7 @@ function drawGauge(opt) {
                 .style("font-weight", opt.titleFontWeight)
                 .style("filter", "url(#drop-shadow)")
                 .attr("font-family", opt.titleFontFamily)
-                .text("ThemeReports") 
+                .text(opt.titleText) 
     // How about a drop shadow?
     // from http://bl.ocks.org/cpbotha/5200394
     var defs = svg.append("defs");
