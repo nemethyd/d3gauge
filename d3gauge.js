@@ -12,6 +12,7 @@ function drawGauge(opt) {
     if(typeof opt.divID === 'undefined')            {opt.divID="vizBox"}
     if(typeof opt.needleVal === 'undefined')        {opt.needleVal=60}
     if(typeof opt.gaugeUnits === 'undefined')       {opt.gaugeUnits="%"}
+    if(typeof opt.gaugeLink === 'undefined')       {opt.gaugeLink=""}
     
     if(typeof opt.padding === 'undefined')          {opt.padding=0.05}
     if(typeof opt.edgeWidth === 'undefined')        {opt.edgeWidth=0.05}
@@ -142,13 +143,26 @@ function drawGauge(opt) {
     //Add the svg content holder to the visualisation box element in the document (vizbox)
     var svgWidth=opt.gaugeRadius * 2,
         svgHeight=opt.gaugeRadius * 2;
+
+    if (opt.gaugeLink != "") {
     // set width taking into account any potential drop shadow. Make sure to 0 out drop shadow for smaller padding
+    // create a SVG with an anchor tag if gaugeLink is set.
     d3.select("#" + opt.divID)
+        .append("a")
+        .attr("href", opt.gaugeLink)
         .append("svg")
         .attr("id", "SVGbox-" + opt.divID)
         .attr("width", svgWidth + opt.offsetX + (2 * (opt.dropShadowDistanceX + opt.dropShadowBlur)))
         .attr("height", svgHeight + opt.offsetY + (2 * (opt.dropShadowDistanceY + opt.dropShadowBlur)))
         .attr({'xmlns': 'http://www.w3.org/2000/svg','xmlns:xlink': 'http://www.w3.org/1999/xlink'});
+    } else {
+    d3.select("#" + opt.divID)
+        .append("svg")
+        .attr("id", "SVGbox-" + opt.divID)
+        .attr("width", svgWidth + opt.offsetX + (2 * (opt.dropShadowDistanceX + opt.dropShadowBlur)))
+        .attr("height", svgHeight + opt.offsetY + (2 * (opt.dropShadowDistanceY + opt.dropShadowBlur)))
+        .attr({'xmlns': 'http://www.w3.org/2000/svg','xmlns:xlink': 'http://www.w3.org/1999/xlink'});      
+    }
     
     var svg = d3.select("#SVGbox-" + opt.divID);
 
