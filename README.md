@@ -1,5 +1,5 @@
 # d3gauge-multicolor
-**d3gauge-multicolor** is a fork of [d3gauge.js](https://github.com/oliverbinns/d3gauge) that adds the ability to configure any number of specific colour ranges to the ticks.
+**d3gauge-multicolor** is a fork of [d3gauge.js](https://github.com/oliverbinns/d3gauge) that adds the ability to configure any number of specific colour ranges to the ticks as well as adding a positionable title.
 
 **d3gauge.js** is an add-in for the [D3](http://d3js.org) javascript library for drawing gauges, based on the [google charts gauge](https://developers.google.com/chart/interactive/docs/gallery/gauge) and [this javascript implementation](http://tomerdoron.blogspot.nl/2011/12/google-style-gauges-using-d3js.html). Every aspect of a d3gauge (sizes, colours, fonts) can be customised by passing an object containing options (see below).  
 
@@ -57,14 +57,43 @@ The following options can be set:
 
 ### DOM
 * **divID** - The div in which to place the gauge
-
+* **offsetX** - The x-offset of the guage in the rendered SVG in pixels
+* **offsetY** - The y-offset of the guage in the rendered SVG in pixels
+ 
 ### Gauge readings
 * **minVal** - The minimum numeric value on the gauge
 * **maxVal** - The maximum numeric value on the gauge
 * **tickSpaceMinVal** - The numeric spacing of the minor increment ticks
 * **tickSpaceMajVal** - The numeric spacing of the major increment ticks
 * **needleVal** - The initial value of the needle
+
+### Title Settings
+* **titleOffsetX** - The x-offset of the title in the rendered SVG in pixels (Default: 0)
+* **titleOffsetY** - The y-offset of the title in the rendered SVG in pixels (Default: 0)
+* **titleFontSize** - The size of the title font(Default: labelFontSize)
+* **titleTextAnchor** - The anchor style of the title (Default: "middle")
+* **titleFontWeight** - The weight of the title font (Default: bold")
+* **titleFontFamily** - The font-family of the title font (Default: "Play")
+* **titleText** - The text to display for the title (Default: "")
+* **titleCol** - The color of the title (Default: "#000")
+
+### Drop Shadow Settings
+* **dropShadowBlur** - Drop shadow gaussian blur amount in pixels (Default: 5)
+* **dropShadowHeight** - Drop shadow height in percentage (Default: "130%")
+* **dropShadowDistanceX** - Shadow distance along the x-axis (Default: 5)
+* **dropShadowDistanceY** - Shadow distance along the y-axis (Default: 5)
+
+### Label Settings
+* **labelFontSize** - Size of the tick mark labels in pixels
+* **labelPadding** - Pixels of padding between the tick labels and the ticks
 * **gaugeUnits** - The units text, which is placed at the bottom of the gauge
+* **labelFontWeight** - Font weight for the label
+* **tickFont** - The font of the tick labels
+
+# Units Settings
+* **unitsFont** - The font of the units text, at the bottom of the gauge
+* **unitsFontSize** - Size of the units display, same as labelFontSize by default
+* **unitsFontWeight** - Font weight for the units
 
 ### Radial metrics
 * **gaugeRadius** - The radius of the gauge in pixels
@@ -82,15 +111,12 @@ The following options can be set:
 * **needleWidth** - Width of the needle in pixels
 * **tickWidthMaj** - Widths of the major tick marks in pixels
 * **tickWidthMin** - Width of the minor tick marks in pixels
-* **labelFontSize** - Size of the tick mark labels in pixels
-* **labelPadding** - Pixels of padding between the tick labels and the ticks
-* **unitsFontSize** - Size of the units display, same as labelFontSize by default
 * **zeroTickAngle** - The position angle (in degrees) of the lowest value tick
 * **maxTickAngle** - The position angle (in degrees) of the highest value tick
 * **zeroNeedleAngle** - The lowest needle angle.  If a needleVal < minVal is set, then the needle will go to this position.
 * **maxNeedleAngle** - The highest needle angle.  If a needleVal > maxVal is set, then the needle will go to this position.
 
-### Colours & fonts
+### Colours
 * **tickColMaj** - Colour of the major ticks
 * **tickColMin** - Colour of the minor ticks
 * **outerEdgeCol** - Colour of the outer circle
@@ -99,8 +125,6 @@ The following options can be set:
 * **unitsLabelCol** - The colour of the units text, at the bottom of the gauge
 * **tickLabelCol** - The colour of the tick labels
 * **needleCol** - The colour of the needle
-* **tickFont** - The font of the tick labels
-* **unitsFont** - The font of the units text, at the bottom of the gauge
 * **colRanges** - Optional colored ticks for specific ranges. If the needleVal 
    is greater than the provided key in this associative array, the 
    value will be assigned as the color.
