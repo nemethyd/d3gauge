@@ -1,0 +1,6 @@
+C:\Users\Daniel\Source\Repos\nemethyd\d3gauge\TypeScriptHTMLApp\bin\TypeScriptHTMLApp1.dll.config
+C:\Users\Daniel\Source\Repos\nemethyd\d3gauge\TypeScriptHTMLApp\bin\TypeScriptHTMLApp1.dll
+C:\Users\Daniel\Source\Repos\nemethyd\d3gauge\TypeScriptHTMLApp\bin\TypeScriptHTMLApp1.pdb
+C:\Users\Daniel\Source\Repos\nemethyd\d3gauge\TypeScriptHTMLApp\obj\Release\TypeScriptHTMLApp.csprojAssemblyReference.cache
+C:\Users\Daniel\Source\Repos\nemethyd\d3gauge\TypeScriptHTMLApp\obj\Release\TypeScriptHTMLApp1.dll
+C:\Users\Daniel\Source\Repos\nemethyd\d3gauge\TypeScriptHTMLApp\obj\Release\TypeScriptHTMLApp1.pdb

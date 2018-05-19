@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAo7VgS9vm1EiMNsq3KEZoxAAAAAACAAAAAAAQZgAAAAEAACAAAADsyE81BomfxPi3X61SohIAN1oRKFaDIulnQQeh8LX0AQAAAAAOgAAAAAIAACAAAAB7UF7mPEf9YQ5hzDt9LJ4EPAMSAybfaTHvijwGDxgS9iAAAABCpIsog2hGplb1XRIqneIuLO4494HYYvjI0IwB7/LPrUAAAADEw15WhSZHsNTaohK9wM1SHfnZsYqe82OeZlZPDu65HSQlfWytv6D0Sbnv8fUW2YX/jCLOvcoKZPxFqIeQ5MrF</EncryptedPassword>
+    <_PublishTargetUrl>C:\inetpub\wwwroot\Warteck</_PublishTargetUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="app.css">
+      <publishTime>12/23/2019 18:16:34</publishTime>
+    </File>
+    <File Include="app.js">
+      <publishTime>12/23/2019 20:09:58</publishTime>
+    </File>
+    <File Include="bin/TypeScriptHTMLApp1.dll">
+      <publishTime>12/23/2019 20:09:58</publishTime>
+    </File>
+    <File Include="bin/TypeScriptHTMLApp1.pdb">
+      <publishTime>12/23/2019 20:09:58</publishTime>
+    </File>
+    <File Include="d3gauge/.git/config">
+      <publishTime>12/23/2019 18:19:12</publishTime>
+    </File>
+    <File Include="d3gauge/.git/description">
+      <publishTime>12/23/2019 18:19:12</publishTime>
+    </File>
+    <File Include="d3gauge/.git/HEAD">
+      <publishTime>12/23/2019 18:19:12</publishTime>
+    </File>
+    <File Include="d3gauge/.git/hooks/applypatch-msg.sample">
+      <publishTime>12/23/2019 18:19:12</publishTime>
+    </File>
+    <File Include="d3gauge/.git/hooks/commit-msg.sample">
+      <publishTime>12/23/2019 18:19:12</publishTime>
+    </File>
+    <File Include="d3gauge/.git/hooks/fsmonitor-watchman.sample">
+      <publishTime>12/23/2019 18:19:12</publishTime>
+    </File>
+    <File Include="d3gauge/.git/hooks/post-update.sample">
+      <publishTime>12/23/2019 18:19:12</publishTime>
+    </File>
+    <File Include="d3gauge/.git/hooks/pre-applypatch.sample">
+      <publishTime>12/23/2019 18:19:12</publishTime>
+    </File>
+    <File Include="d3gauge/.git/hooks/pre-commit.sample">
+      <publishTime>12/23/2019 18:19:12</publishTime>
+    </File>
+    <File Include="d3gauge/.git/hooks/pre-merge-commit.sample">
+      <publishTime>12/23/2019 18:19:12</publishTime>
+    </File>
+    <File Include="d3gauge/.git/hooks/pre-push.sample">
+      <publishTime>12/23/2019 18:19:12</publishTime>
+    </File>
+    <File Include="d3gauge/.git/hooks/pre-rebase.sample">
+      <publishTime>12/23/2019 18:19:12</publishTime>
+    </File>
+    <File Include="d3gauge/.git/hooks/pre-receive.sample">
+      <publishTime>12/23/2019 18:19:12</publishTime>
+    </File>
+    <File Include="d3gauge/.git/hooks/prepare-commit-msg.sample">
+      <publishTime>12/23/2019 18:19:12</publishTime>
+    </File>
+    <File Include="d3gauge/.git/hooks/update.sample">
+      <publishTime>12/23/2019 18:19:12</publishTime>
+    </File>
+    <File Include="d3gauge/.git/index">
+      <publishTime>12/23/2019 18:19:12</publishTime>
+    </File>
+    <File Include="d3gauge/.git/info/exclude">
+      <publishTime>12/23/2019 18:19:12</publishTime>
+    </File>
+    <File Include="d3gauge/.git/logs/HEAD">
+      <publishTime>12/23/2019 18:19:12</publishTime>
+    </File>
+    <File Include="d3gauge/.git/logs/refs/heads/master">
+      <publishTime>12/23/2019 18:19:12</publishTime>
+    </File>
+    <File Include="d3gauge/.git/logs/refs/remotes/origin/HEAD">
+      <publishTime>12/23/2019 18:19:12</publishTime>
+    </File>
+    <File Include="d3gauge/.git/objects/pack/pack-6bf62e856f50beaba8b11d34147ea8196b0097af.idx">
+      <publishTime>12/23/2019 18:19:12</publishTime>
+    </File>
+    <File Include="d3gauge/.git/objects/pack/pack-6bf62e856f50beaba8b11d34147ea8196b0097af.pack">
+      <publishTime>12/23/2019 18:19:12</publishTime>
+    </File>
+    <File Include="d3gauge/.git/packed-refs">
+      <publishTime>12/23/2019 18:19:12</publishTime>
+    </File>
+    <File Include="d3gauge/.git/refs/heads/master">
+      <publishTime>12/23/2019 18:19:12</publishTime>
+    </File>
+    <File Include="d3gauge/.git/refs/remotes/origin/HEAD">
+      <publishTime>12/23/2019 18:19:12</publishTime>
+    </File>
+    <File Include="d3gauge/.git/sourcetreeconfig.json">
+      <publishTime>12/23/2019 18:19:12</publishTime>
+    </File>
+    <File Include="d3gauge/.gitignore">
+      <publishTime>12/23/2019 18:19:12</publishTime>
+    </File>
+    <File Include="d3gauge/d3gauge.js">
+      <publishTime>12/23/2019 18:41:13</publishTime>
+    </File>
+    <File Include="d3gauge/demo-multicolor.html">
+      <publishTime>12/23/2019 18:19:12</publishTime>
+    </File>
+    <File Include="d3gauge/demo.html">
+      <publishTime>12/23/2019 18:42:12</publishTime>
+    </File>
+    <File Include="d3gauge/docs/example-multicolor-rainbowz.png">
+      <publishTime>12/23/2019 18:19:12</publishTime>
+    </File>
+    <File Include="d3gauge/docs/example-multicolor.png">
+      <publishTime>12/23/2019 18:19:12</publishTime>
+    </File>
+    <File Include="d3gauge/docs/example.png">
+      <publishTime>12/23/2019 18:19:12</publishTime>
+    </File>
+    <File Include="d3gauge/docs/example.svg">
+      <publishTime>12/23/2019 18:19:12</publishTime>
+    </File>
+    <File Include="d3gauge/docs/exampleOverlay.png">
+      <publishTime>12/23/2019 18:19:12</publishTime>
+    </File>
+    <File Include="d3gauge/docs/exampleOverlay.svg">
+      <publishTime>12/23/2019 18:19:12</publishTime>
+    </File>
+    <File Include="d3gauge/LICENSE.txt">
+      <publishTime>12/23/2019 18:19:12</publishTime>
+    </File>
+    <File Include="d3gauge/README.md">
+      <publishTime>12/23/2019 18:19:12</publishTime>
+    </File>
+    <File Include="index.html">
+      <publishTime>12/23/2019 18:16:34</publishTime>
+    </File>
+    <File Include="Web.config">
+      <publishTime>12/23/2019 20:09:59</publishTime>
+    </File>
+  </ItemGroup>
+</Project>
