@@ -173,7 +173,7 @@ function drawGauge(opt) {
             .attr("cx", originX)
             .attr("cy", originY)
             .attr("r", outerEdgeRadius)
-            .style("filter", "url(#drop-shadow)")
+            .style("filter", "url(#drop-shadow-" + opt.divID + ")")
             .style("fill", opt.outerEdgeCol)
             .style("stroke", "none");
     var innerC = circleGroup.append("svg:circle")
@@ -410,14 +410,14 @@ function drawGauge(opt) {
                 .attr("text-anchor", opt.titleTextAnchor)
                 .style("fill", opt.titleCol)
                 .style("font-weight", opt.titleFontWeight)
-                .style("filter", "url(#drop-shadow)")
+                .style("filter", "url(#drop-shadow-" + opt.divID + ")")
                 .attr("font-family", opt.titleFontFamily)
                 .text(opt.titleText) 
     // How about a drop shadow?
     // from http://bl.ocks.org/cpbotha/5200394
     var defs = svg.append("defs");
     var filter = defs.append("filter")
-    .attr("id", "drop-shadow")
+    .attr("id", "drop-shadow-" + opt.divID)
     .attr("height", opt.dropShadowHeight);
 
     // SourceAlpha refers to opacity of graphic that this filter will be applied to
