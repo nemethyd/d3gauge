@@ -1,73 +1,81 @@
 /* global d3 */
 function drawGauge(opt) {
     // Set defaults if not supplied
-    if(typeof opt === 'undefined')                  {var opt={}}
-    if(typeof opt.gaugeRadius === 'undefined')      {opt.gaugeRadius=200}
-    if(typeof opt.offsetX === 'undefined')          {opt.offsetX=0}
-    if(typeof opt.offsetY === 'undefined')          {opt.offsetY=0}
-    if(typeof opt.minVal === 'undefined')           {opt.minVal=0}
-    if(typeof opt.maxVal === 'undefined')           {opt.maxVal=100}
-    if(typeof opt.tickSpaceMinVal === 'undefined')  {opt.tickSpaceMinVal=1}
-    if(typeof opt.tickSpaceMajVal === 'undefined')  {opt.tickSpaceMajVal=10}
-    if(typeof opt.divID === 'undefined')            {opt.divID="vizBox"}
-    if(typeof opt.needleVal === 'undefined')        {opt.needleVal=60}
-    if(typeof opt.gaugeUnits === 'undefined')       {opt.gaugeUnits="%"}
-    if(typeof opt.gaugeLink === 'undefined')       {opt.gaugeLink=""}
+    if(typeof opt === 'undefined')                      {var opt={}}
+    if(typeof opt.gaugeRadius === 'undefined')          {opt.gaugeRadius=200}
+    if(typeof opt.offsetX === 'undefined')              {opt.offsetX=0}
+    if(typeof opt.offsetY === 'undefined')              {opt.offsetY=0}
+    if(typeof opt.minVal === 'undefined')               {opt.minVal=0}
+    if(typeof opt.maxVal === 'undefined')               {opt.maxVal=100}
+    if(typeof opt.tickSpaceMinVal === 'undefined')      {opt.tickSpaceMinVal=1}
+    if(typeof opt.tickSpaceMajVal === 'undefined')      {opt.tickSpaceMajVal=10}
+    if(typeof opt.divID === 'undefined')                {opt.divID="vizBox"}
+    if(typeof opt.needleVal === 'undefined')            {opt.needleVal=60}
+    if(typeof opt.gaugeUnits === 'undefined')           {opt.gaugeUnits="%"}
+    if(typeof opt.showTickUnits === 'undefined')        {opt.showTickUnits = false}
+    if(typeof opt.outerTicks === 'undefined')           {opt.outerTicks = false} //in which direction major ticks outgrow minor ticks
+    if(typeof opt.gaugeLink === 'undefined')            {opt.gaugeLink=""}
     
-    if(typeof opt.padding === 'undefined')          {opt.padding=0.05}
-    if(typeof opt.edgeWidth === 'undefined')        {opt.edgeWidth=0.05}
-    if(typeof opt.tickEdgeGap === 'undefined')      {opt.tickEdgeGap=0.05}
-    if(typeof opt.tickLengthMaj === 'undefined')    {opt.tickLengthMaj=0.15}
-    if(typeof opt.tickLengthMin === 'undefined')    {opt.tickLengthMin=0.05}
-    if(typeof opt.needleTickGap === 'undefined')    {opt.needleTickGap=0.05}
-    if(typeof opt.needleLengthNeg === 'undefined')  {opt.needleLengthNeg=0.2}
-    if(typeof opt.pivotRadius === 'undefined')      {opt.pivotRadius=0.1}
+    if(typeof opt.padding === 'undefined')              {opt.padding=0.05}
+    if(typeof opt.edgeWidth === 'undefined')            {opt.edgeWidth=0.05}
+    if(typeof opt.tickEdgeGap === 'undefined')          {opt.tickEdgeGap=0.05}
+    if(typeof opt.tickLengthMaj === 'undefined')        {opt.tickLengthMaj=0.15}
+    if(typeof opt.tickLengthMin === 'undefined')        {opt.tickLengthMin=0.05}
+    if(typeof opt.needleTickGap === 'undefined')        {opt.needleTickGap=0.05}
+    if(typeof opt.needleLengthNeg === 'undefined')      {opt.needleLengthNeg=0.2}
+    if(typeof opt.pivotRadius === 'undefined')          {opt.pivotRadius=0.1}
 
-    if(typeof opt.ticknessGaugeBasis === 'undefined') {opt.ticknessGaugeBasis=200}
-    if(typeof opt.needleWidth === 'undefined')      {opt.needleWidth=5}
-    if(typeof opt.tickWidthMaj === 'undefined')     {opt.tickWidthMaj=3}
-    if(typeof opt.tickWidthMin === 'undefined')     {opt.tickWidthMin=1}
+    if(typeof opt.ticknessGaugeBasis === 'undefined')   {opt.ticknessGaugeBasis=200}
+    if(typeof opt.needleWidth === 'undefined')          {opt.needleWidth=5}
+    if(typeof opt.tickWidthMaj === 'undefined')         {opt.tickWidthMaj=3}
+    if(typeof opt.tickWidthMin === 'undefined')         {opt.tickWidthMin=1}
     
-    if(typeof opt.labelFontSize === 'undefined')    {opt.labelFontSize=18}
-    if(typeof opt.labelPadding === 'undefined')     {opt.labelPadding=opt.labelFontSize}
-    if(typeof opt.unitsFontSize === 'undefined')    {opt.unitsFontSize=opt.labelFontSize}
-    if(typeof opt.labelFontWeight === 'undefined')  {opt.labelFontWeight="bold"}
-    if(typeof opt.unitsFontWeight === 'undefined')  {opt.unitsFontWeight=opt.labelFontWeight}
-    if(typeof opt.titleOffsetX === 'undefined')     {opt.titleOffsetX=0}
-    if(typeof opt.titleOffsetY === 'undefined')     {opt.titleOffsetY=0}
-    if(typeof opt.titleFontSize === 'undefined')    {opt.titleFontSize=opt.labelFontSize}
-    if(typeof opt.titleTextAnchor === 'undefined')  {opt.titleTextAnchor="middle"}
-    if(typeof opt.titleFontWeight === 'undefined')  {opt.titleFontWeight="bold"}
-    if(typeof opt.titleFontFamily === 'undefined')  {opt.titleFontFamily="Play"}
-    if(typeof opt.titleText === 'undefined')        {opt.titleText=""}
-    if(typeof opt.dropShadowBlur === 'undefined')   {opt.dropShadowBlur=5}
-    if(typeof opt.dropShadowHeight === 'undefined') {opt.dropShadowHeight="130%"}
-    if(typeof opt.dropShadowDistanceX === 'undefined') {opt.dropShadowDistanceX=5}
-    if(typeof opt.dropShadowDistanceY === 'undefined') {opt.dropShadowDistanceY=5}
+    if(typeof opt.labelFontSize === 'undefined')        {opt.labelFontSize=18}
+    if(typeof opt.labelPadding === 'undefined')         {opt.labelPadding=opt.labelFontSize}
+    if(typeof opt.unitsFontSize === 'undefined')        {opt.unitsFontSize=opt.labelFontSize}
+    if(typeof opt.labelFontWeight === 'undefined')      {opt.labelFontWeight="bold"}
+    if(typeof opt.unitsFontWeight === 'undefined')      {opt.unitsFontWeight=opt.labelFontWeight}
+    if(typeof opt.titleOffsetX === 'undefined')         {opt.titleOffsetX=0}
+    if(typeof opt.titleOffsetY === 'undefined')         {opt.titleOffsetY=0}
+    if(typeof opt.titleFontSize === 'undefined')        {opt.titleFontSize=opt.labelFontSize}
+    if(typeof opt.titleTextAnchor === 'undefined')      {opt.titleTextAnchor="middle"}
+    if(typeof opt.titleFontWeight === 'undefined')      {opt.titleFontWeight="bold"}
+    if(typeof opt.titleFontFamily === 'undefined')      {opt.titleFontFamily="Play"}
+    if(typeof opt.titleText === 'undefined')            {opt.titleText=""}
+    if(typeof opt.dropShadowBlur === 'undefined')       {opt.dropShadowBlur=5}
+    if(typeof opt.dropShadowHeight === 'undefined')     {opt.dropShadowHeight="130%"}
+    if(typeof opt.dropShadowDistanceX === 'undefined')  {opt.dropShadowDistanceX=5}
+    if(typeof opt.dropShadowDistanceY === 'undefined')  {opt.dropShadowDistanceY=5}
     
 
-    if(typeof opt.zeroTickAngle === 'undefined')    {opt.zeroTickAngle=60}
-    if(typeof opt.maxTickAngle === 'undefined')     {opt.maxTickAngle=300}
-    if(typeof opt.zeroNeedleAngle === 'undefined')  {opt.zeroNeedleAngle=40}
-    if(typeof opt.maxNeedleAngle === 'undefined')   {opt.maxNeedleAngle=320}
-    if(typeof opt.animDuration === 'undefined')     {opt.animDuration=1000}
+    if(typeof opt.zeroTickAngle === 'undefined')        {opt.zeroTickAngle=60}
+    if(typeof opt.maxTickAngle === 'undefined')         {opt.maxTickAngle=300}
+    if(typeof opt.zeroNeedleAngle === 'undefined')      {opt.zeroNeedleAngle=40}
+    if(typeof opt.maxNeedleAngle === 'undefined')       {opt.maxNeedleAngle=320}
+    if(typeof opt.animDuration === 'undefined')         {opt.animDuration=1000}
 
-    if(typeof opt.tickColMaj === 'undefined')       {opt.tickColMaj = '#0099CC'}
-    if(typeof opt.tickColMin === 'undefined')       {opt.tickColMin = '#000'}
-    if(typeof opt.outerEdgeCol === 'undefined')     {opt.outerEdgeCol = '#0099CC'}
-    if(typeof opt.pivotCol === 'undefined')         {opt.pivotCol = '#999'}
-    if(typeof opt.innerCol === 'undefined')         {opt.innerCol = '#fff'}
-    if(typeof opt.unitsLabelCol === 'undefined')    {opt.unitsLabelCol = '#000'}
-    if(typeof opt.tickLabelCol === 'undefined')     {opt.tickLabelCol = '#000'}
-    if(typeof opt.needleCol === 'undefined')        {opt.needleCol = '#0099CC'}
-    if(typeof opt.titleCol === 'undefined')         {opt.titleCol="#000"}
+    if(typeof opt.tickColMaj === 'undefined')           {opt.tickColMaj = '#0099CC'}
+    if(typeof opt.tickColMin === 'undefined')           {opt.tickColMin = '#000'}
+    if(typeof opt.outerEdgeCol === 'undefined')         {opt.outerEdgeCol = '#0099CC'}
+    if(typeof opt.pivotCol === 'undefined')             {opt.pivotCol = '#999'}
+    if(typeof opt.innerCol === 'undefined')             {opt.innerCol = '#fff'}
+    if(typeof opt.unitsLabelCol === 'undefined')        {opt.unitsLabelCol = '#000'}
+    if(typeof opt.tickLabelCol === 'undefined')         {opt.tickLabelCol = '#000'}
+    if(typeof opt.needleCol === 'undefined')            {opt.needleCol = '#0099CC'}
+    if(typeof opt.titleCol === 'undefined')             {opt.titleCol="#000"}
 
     var defaultFonts = '"Helvetica Neue", Helvetica, Arial, sans-serif'
-    if(typeof opt.tickFont === 'undefined')         {opt.tickFont = defaultFonts};
-    if(typeof opt.unitsFont === 'undefined')        {opt.unitsFont = defaultFonts};
+    if(typeof opt.tickFont === 'undefined')             {opt.tickFont = defaultFonts};
+    if(typeof opt.unitsFont === 'undefined')            {opt.unitsFont = defaultFonts};
 
-    if(typeof opt.colRanges === 'undefined')      {opt.colRanges = {};};
-    
+    if(typeof opt.colRanges === 'undefined')            {opt.colRanges = {};};
+
+    // checking parameter orders and chnage them, if necessary
+    if (opt.labelFontSize < 6) { opt.labelFontSize = 0 };
+    if (opt.minVal > opt.maxVal) [opt.minVal, opt.maxVal] = [opt.maxVal, opt.minVal];
+    if (opt.zeroTickAngle > opt.maxTickAngle) [opt.zeroTickAngle, opt.maxTickAngle] = [opt.maxTickAngle, opt.zeroTickAngle];
+    if (opt.zeroNeedAngle > opt.maxNeedAngle) [opt.zeroNeedAngle, opt.maxNeedAngle] = [opt.maxNeedAngle, opt.zeroNeedAngle];
+
     // Calculate absolute values
     opt.padding = opt.padding * opt.gaugeRadius,
     opt.edgeWidth = opt.edgeWidth * opt.gaugeRadius,
@@ -78,25 +86,12 @@ function drawGauge(opt) {
     opt.needleLengthNeg = opt.needleLengthNeg * opt.gaugeRadius,
     opt.pivotRadius = opt.pivotRadius * opt.gaugeRadius;
 
-    opt.needleWidth = opt.needleWidth * (opt.gaugeRadius/opt.ticknessGaugeBasis),
-    opt.tickWidthMaj = opt.tickWidthMaj * (opt.gaugeRadius/opt.ticknessGaugeBasis),
-    opt.tickWidthMin = opt.tickWidthMin * (opt.gaugeRadius/opt.ticknessGaugeBasis),
-    opt.labelFontSize = opt.labelFontSize * (opt.gaugeRadius/opt.ticknessGaugeBasis);
-    
+    var ticknessRatio = (opt.gaugeRadius / opt.ticknessGaugeBasis);
+    opt.needleWidth = opt.needleWidth * ticknessRatio,
+    opt.tickWidthMaj = opt.tickWidthMaj * ticknessRatio,
+    opt.tickWidthMin = opt.tickWidthMin * ticknessRatio,
+    opt.labelFontSize = opt.labelFontSize * ticknessRatio;
 
-    //Calculate required values
-    var needleLengthPos = opt.gaugeRadius - opt.padding - opt.edgeWidth - opt.tickEdgeGap - opt.tickLengthMaj - opt.needleTickGap,
-        needlePathLength = opt.needleLengthNeg + needleLengthPos,
-        needlePathStart = opt.needleLengthNeg * (-1),
-        tickStartMaj = opt.gaugeRadius - opt.padding - opt.edgeWidth - opt.tickEdgeGap - opt.tickLengthMaj,
-        tickStartMin = opt.gaugeRadius - opt.padding - opt.edgeWidth - opt.tickEdgeGap - opt.tickLengthMin,
-        labelStart = tickStartMaj - opt.labelPadding,
-        innerEdgeRadius = opt.gaugeRadius - opt.padding - opt.edgeWidth,
-        outerEdgeRadius = opt.gaugeRadius - opt.padding;
-    var originX = opt.gaugeRadius + opt.offsetX + opt.dropShadowDistanceX;
-    var originY = opt.gaugeRadius + opt.offsetY + opt.dropShadowDistanceY;
-
-    if(opt.labelFontSize < 6){opt.labelFontSize = 0}
         
     //Define a linear scale to convert values to needle displacement angle (degrees)
     var valueScale = d3.scaleLinear()
@@ -119,30 +114,115 @@ function drawGauge(opt) {
     counter = 0
     for (var i=opt.zeroTickAngle; i <= opt.maxTickAngle; i = i + tickSpacingMinDeg)
         { 
-            //Check for an existing major tick angle
-            var exists = 0
+        //Check for an existing major tick angle
+        var exists = false;
             tickAnglesMaj.forEach(function(d){
-                if((opt.zeroTickAngle + (tickSpacingMinDeg * counter))==d){exists=1}
+                exists = (opt.zeroTickAngle + (tickSpacingMinDeg * counter)) == d
             })
             
-            if(exists == 0){tickAnglesMin.push(opt.zeroTickAngle + (tickSpacingMinDeg * counter))}
+            if (!exists) {tickAnglesMin.push(opt.zeroTickAngle + (tickSpacingMinDeg * counter))}
             counter++
         }
 
     
     //Calculate major tick mark label text
     counter=0
-    var tickLabelText=[];
+    var tickLabelText = []; 
+    var maxLabelLength = 0, minLabelLength = 100; // these varaibles are used for adjusting lbel positions
     
     for (var i = opt.zeroTickAngle; i <= opt.maxTickAngle; i = i + tickSpacingMajDeg)
-        { 
-            tickLabelText.push(opt.minVal + (opt.tickSpaceMajVal * counter))
-            counter++
-        }    
-    
+    { 
+        var tickVal = opt.minVal + (opt.tickSpaceMajVal * counter)
+        // add the unit text if required
+        if (opt.showTickUnits) tickVal = tickVal + opt.gaugeUnits;
+
+        // calculate max ane min length of tick Labels
+        if (maxLabelLength < tickVal.length) maxLabelLength = tickVal.length;
+        if (minLabelLength > tickVal.length) minLabelLength = tickVal.length;
+        
+        tickLabelText.push(tickVal)
+        counter++
+    }    
+  
+    //Calculate required values
+    var outerTickPadding = (opt.outerTicks ? opt.labelPadding : 0);
+    var workRadius = opt.gaugeRadius - opt.padding - opt.edgeWidth;
+    var hFont = opt.labelFontSize, wFont = opt.labelFontSize * maxLabelLength;
+    var needleLengthPos = workRadius - opt.tickLengthMaj - opt.needleTickGap - outerTickPadding,
+        needlePathLength = opt.needleLengthNeg + needleLengthPos,
+        needlePathStart = opt.needleLengthNeg * (-1),
+        outerTickStart = workRadius - opt.labelPadding - wFont,
+        tickStartMaj = opt.outerTicks ? outerTickStart : workRadius - opt.tickLengthMaj - opt.tickEdgeGap,
+        tickStartMin = opt.outerTicks ? outerTickStart : workRadius - opt.tickLengthMin - opt.tickEdgeGap,
+        innerEdgeRadius = opt.gaugeRadius - opt.padding - opt.edgeWidth + outerTickPadding ,
+        outerEdgeRadius = opt.gaugeRadius - opt.padding + outerTickPadding ;
+    var labelStart = opt.outerTicks ? opt.gaugeRadius - opt.padding - opt.edgeWidth + opt.labelPadding : tickStartMaj - opt.tickLengthMaj - opt.labelPadding;
+    var originX = opt.gaugeRadius + opt.offsetX + opt.dropShadowDistanceX;
+    var originY = opt.gaugeRadius + opt.offsetY + opt.dropShadowDistanceY;
+
+    //console.log("lab:" + labelStart + " maj:" + tickStartMaj + " min:" + tickStartMin)
     //Add the svg content holder to the visualisation box element in the document (vizbox)
-    var svgWidth=opt.gaugeRadius * 2,
-        svgHeight=opt.gaugeRadius * 2;
+
+    //calculate the container-box values based on the zero and maxTickAngle
+    var zeroQuartal = 0, maxQuartal = 0
+
+    if (opt.zeroTickAngle > 0 && opt.zeroTickAngle <= 90) zeroQuartal = 1
+    else if (opt.zeroTickAngle > 90 && opt.zeroTickAngle <= 180) zeroQuartal = 2
+    else if (opt.zeroTickAngle > 180 && opt.zeroTickAngle <= 270) zeroQuartal = 3
+    else zeroQuartal = 4
+
+
+    if (opt.maxTickAngle > 0 && opt.maxTickAngle <= 90) maxQuartal = 1
+    else if (opt.maxTickAngle > 90 && opt.maxTickAngle <= 180) maxQuartal = 2
+    else if (opt.maxTickAngle > 180 && opt.maxTickAngle <= 270) maxQuartal = 3
+    else maxQuartal = 4
+
+
+    var hZero = Math.cos(dToR(opt.zeroTickAngle)),
+        hMax = Math.cos(dToR(opt.maxTickAngle)),
+        wZero = Math.sin(dToR(opt.zeroTickAngle)),
+        wMax = Math.sin(dToR(opt.maxTickAngle)),
+        hFactor = 2, wFactor = 2; 
+
+    switch (zeroQuartal) {
+        case 1:
+            switch (maxQuartal) {
+                case 1: hFactor = max(hZero, hMax); wFactor = max(wZero, wMax); break
+                case 2: hFactor = hZero - hMax; wFactor = 1; break
+                case 3: hFactor = 1 + hZero; wFactor = 1 - wMax; break
+                case 4: hFactor = 1 + max(hZero, hMax); wFactor = 2; wFont = 0; break
+            }
+            break
+        case 2:
+            switch (maxQuartal) {
+                case 2: hFactor = max(-hZero, -hMax); wFactor = max(wZero, wMax); break
+                case 3: hFactor = 1; wFactor = max(wZero, -wMax); break
+                case 4: hFactor = 2; wFactor = max(-wZero, -wMax); break
+            }
+            break
+        case 3:
+            switch (maxQuartal) {
+                case 3: hFactor = max(-hZero, -hMax); wFactor = max(-wZero, -wMax); break
+                case 4: hFactor = max(hZero, -hMax); wFactor = max(-wZero, -wMax); break
+            }
+            break
+        case 4:
+            switch (maxQuartal) {
+                case 4: hFactor = max(hZero, hMax); wFactor = max(-wZero, -wMax); break
+            }
+            break
+    }
+
+    var svgHeight = opt.gaugeRadius * hFactor+hFont;
+    var svgWidth = opt.gaugeRadius * wFactor + 2 * wFont
+
+    var boxId = "SVGbox-" + opt.divID;
+    // set common variables for anchored and non-anchored gauges
+    var shadowedWidth = svgWidth + opt.offsetX + (2 * (opt.dropShadowDistanceX + opt.dropShadowBlur)),
+        shadowedHeight = svgHeight + opt.offsetY + (2 * (opt.dropShadowDistanceY + opt.dropShadowBlur));
+    var xmlns_attr = { 'xmlns': 'http://www.w3.org/2000/svg', 'xmlns:xlink': 'http://www.w3.org/1999/xlink' };
+
+    //console.log("shw:" + shadowedWidth + " shh:" + shadowedHeight);
 
     if (opt.gaugeLink != "") {
     // set width taking into account any potential drop shadow. Make sure to 0 out drop shadow for smaller padding
@@ -151,45 +231,45 @@ function drawGauge(opt) {
         .append("a")
         .attr("href", opt.gaugeLink)
         .append("svg")
-        .attr("id", "SVGbox-" + opt.divID)
-        .attr("width", svgWidth + opt.offsetX + (2 * (opt.dropShadowDistanceX + opt.dropShadowBlur)))
-        .attr("height", svgHeight + opt.offsetY + (2 * (opt.dropShadowDistanceY + opt.dropShadowBlur)))
-        .attr({'xmlns': 'http://www.w3.org/2000/svg','xmlns:xlink': 'http://www.w3.org/1999/xlink'});
+        .attr("id", boxId)
+        .attr("width", shadowedWidth)
+        .attr("height", shadowedHeight )
+        .attr(xmlns_attr);
     } else {
     d3.select("#" + opt.divID)
         .append("svg")
-        .attr("id", "SVGbox-" + opt.divID)
-        .attr("width", svgWidth + opt.offsetX + (2 * (opt.dropShadowDistanceX + opt.dropShadowBlur)))
-        .attr("height", svgHeight + opt.offsetY + (2 * (opt.dropShadowDistanceY + opt.dropShadowBlur)))
-        .attr({'xmlns': 'http://www.w3.org/2000/svg','xmlns:xlink': 'http://www.w3.org/1999/xlink'});      
+        .attr("id", boxId)
+        .attr("width", shadowedWidth)
+        .attr("height", shadowedHeight)
+        .attr(xmlns_attr);
     }
     
     var svg = d3.select("#SVGbox-" + opt.divID);
 
     //Draw the circles that make up the edge of the gauge
-    var circleGroup = svg.append("svg:g")
-            .attr("id","circles")
-    var outerC = circleGroup.append("svg:circle")
-            .attr("cx", originX)
-            .attr("cy", originY)
-            .attr("r", outerEdgeRadius)
-            .style("filter", "url(#drop-shadow-" + opt.divID + ")")
-            .style("fill", opt.outerEdgeCol)
-            .style("stroke", "none");
-    var innerC = circleGroup.append("svg:circle")
-            .attr("cx", originX)
-            .attr("cy", originY)
-            .attr("r", innerEdgeRadius)
-            .style("fill", opt.innerCol)
-            .style("stroke", "none");
-    
+    var circleGroup = svg.append("g").attr("id", "circles");
+    //outer circle
+    circleGroup.append("circle")
+        .attr("cx", originX)
+        .attr("cy", originY)
+        .attr("r", outerEdgeRadius)
+        .style("filter", "url(#drop-shadow-" + opt.divID + ")")
+        .style("fill", opt.outerEdgeCol)
+        .style("stroke", "solid");
+    //inner circle
+    circleGroup.append("circle")
+        .attr("cx", originX)
+        .attr("cy", originY)
+        .attr("r", innerEdgeRadius)
+        .style("fill", opt.innerCol)
+        .style("stroke", "none");    
     //Draw the circle for the needle 'pivot'
-    var pivotC = circleGroup.append("svg:circle")
-            .attr("cx", originX)
-            .attr("cy", originY)
-            .attr("r", opt.pivotRadius)
-            .style("fill", opt.pivotCol)
-            .style("stroke", "none");
+    circleGroup.append("circle")
+        .attr("cx", originX)
+        .attr("cy", originY)
+        .attr("r", opt.pivotRadius)
+        .style("fill", opt.pivotCol)
+        .style("stroke", "none");
     
     
     //Define two functions for calculating the coordinates of the major & minor tick mark paths
@@ -208,8 +288,8 @@ function drawGauge(opt) {
 
             //Use a D3.JS path generator
             var lineFunc = d3.line()
-                .x(function(d) {return d.x;})
-                .y(function(d) {return d.y;});
+                .x(d => d.x)
+                .y(d => d.y);
 
             var lineSVG = lineFunc(lineData)
 
@@ -233,8 +313,8 @@ function drawGauge(opt) {
 
             //Use a D3.JS path generator
             var lineFunc=d3.line()
-                .x(function(d) {return d.x;})
-                .y(function(d) {return d.y;});
+                .x(d => d.x)
+                .y(d => d.y);
 
             var lineSVG = lineFunc(lineData)
 
@@ -248,19 +328,18 @@ function drawGauge(opt) {
 
     
     //Add a group to hold the ticks
-    var ticks = svg.append("svg:g")
+    var ticks = svg.append("g")
                 .attr("id","tickMarks")
     
     //Add a groups for major and minor ticks (minor first, so majors overlay)
-    var ticksMin = ticks.append("svg:g")
+    var ticksMin = ticks.append("g")
                 .attr("id","minorTickMarks")
-    var ticksMaj = ticks.append("svg:g")
+    var ticksMaj = ticks.append("g")
                 .attr("id","majorTickMarks")
 
     // keep track of the total tick count
     var majCount = 0;
     var minCount = 0;
-    var minsPerMax = (opt.tickSpaceMajVal / opt.tickSpaceMinVal);
 
     function getMajColorFromRange(value) {
       var thisColor = opt.tickColMaj;
@@ -289,67 +368,73 @@ function drawGauge(opt) {
     }
   
     //Draw the tick marks 
-    var tickMin = ticksMin.selectAll("path")
-                .data(tickAnglesMin)
-                .enter().append("path")
-                .attr("d", pathTickMin)
+    ticksMin.selectAll("path")
+        .data(tickAnglesMin)
+        .enter().append("path")
+        .attr("d", pathTickMin)
 // if the count is greater than a configured level, change the color
-                .style("stroke", function() {
-                    var res = getMinColorFromRange(minCount);
-                    minCount++;
-                    return res;
-                })
-                .style("stroke-width", opt.tickWidthMin+"px");    
-    var tickMaj = ticksMaj.selectAll("path")
-                .data(tickAnglesMaj)
-                .enter().append("path")
-                .attr("d", pathTickMaj)
+        .style("stroke", function() {
+            var res = getMinColorFromRange(minCount);
+            minCount++;
+            return res;
+        })
+        .style("stroke-width", opt.tickWidthMin+"px");    
+    ticksMaj.selectAll("path")
+        .data(tickAnglesMaj)
+        .enter().append("path")
+        .attr("d", pathTickMaj)
 // if the count is greater than a configured level, change the color
-                .style("stroke", function() {
-                    var res = getMajColorFromRange(majCount)
-                    majCount++;
-                    return res;
-                })
-                .style("stroke-width", opt.tickWidthMaj+"px");  
-    
+        .style("stroke", function() {
+            var res = getMajColorFromRange(majCount)
+            majCount++;
+            return res;
+        })
+        .style("stroke-width", opt.tickWidthMaj+"px");  
+
     
     //Define functions to calcuate the positions of the labels for the tick marks
     function labelXcalc(d,i){
         var tickAngle = d + 90;
         var tickAngleRad = dToR(tickAngle);
-        var x1 = originX + (labelStart * Math.cos(tickAngleRad));
+        var absXCorr = opt.labelFontSize * (tickLabelText[i].length - minLabelLength) / 2;
+        var xCorr = opt.outerTicks ? absXCorr : - absXCorr;
+        var x1 = originX + labelStart * Math.cos(tickAngleRad)+xCorr;
         return x1
     }
     function labelYcalc(d,i){
-        var tickAngle=d+90,
-            tickAngleRad=dToR(tickAngle),
-            y1 = originY + ((labelStart) * Math.sin(tickAngleRad)) + (opt.labelFontSize/2);        
+        var tickAngle = d + 90;
+        var tickAngleRad = dToR(tickAngle);
+        var sinAngle = Math.sin(tickAngleRad);
+        var absYCorr = opt.labelFontSize * sinAngle;
+        var yCorr = opt.outerTicks ? -absYCorr : opt.labelFontSize/2;
+        var y1 = originY + labelStart * sinAngle + yCorr;        
         return y1
     }    
     
     //Add labels for major tick marks
-    var tickLabels = svg.append("svg:g")
+    //console.log("outerTicks=" + opt.outerTicks);
+    var tickLabels = svg.append("g")
                 .attr("id", "tickLabels")
-    var tickLabel = tickLabels.selectAll("text")
-                .data(tickAnglesMaj)
-                .enter().append("text")
-                .attr("x",function(d,i){return labelXcalc(d,i)})
-                .attr("y",function(d,i){return labelYcalc(d,i)})    
-                .attr("font-size", opt.labelFontSize) 
-                .attr("text-anchor", "middle")
-                .style("fill", opt.tickLabelCol)
-                .style("font-weight", opt.labelFontWeight)
-                .attr("font-family", opt.tickFont)
-                .text(function(d,i) {return tickLabelText[i]})
+    tickLabels.selectAll("text")
+        .data(tickAnglesMaj)
+        .enter().append("text")
+        .attr("x", (d,i) => labelXcalc(d,i)) 
+        .attr("y", (d,i) => labelYcalc(d,i))    
+        .attr("font-size", opt.labelFontSize) 
+        .attr("text-anchor", "middle")
+        .style("fill", opt.tickLabelCol)
+        .style("font-weight", opt.labelFontWeight)
+        .attr("font-family", opt.tickFont)
+        .text((_d,i) => tickLabelText[i])
     
     //Add label for units
-    var unitLabels = svg.append("svg:g")
+    var unitLabels = svg.append("g")
                 .attr("id", "unitLabels")
     var unitsLabel = unitLabels.selectAll("text")
                 .data([0])
                 .enter().append("text")
-                .attr("x",function(d,i){return labelXcalc(d,i)})
-                .attr("y",function(d,i){return labelYcalc(d,i)})    
+                .attr("x", (d, i) => labelXcalc(d, i))
+                .attr("y", (d, i) => labelYcalc(d, i))    
                 .attr("font-size", opt.unitsFontSize) 
                 .attr("text-anchor", "middle")
                 .style("fill", opt.unitsLabelCol)
@@ -374,8 +459,8 @@ function drawGauge(opt) {
                     lineData = [{"x": x1, "y": y1}, {"x": x2, "y": y2}];
                 
                 var lineFunc=d3.line()
-                    .x(function(d) {return d.x;})
-                    .y(function(d) {return d.y;});
+                    .x( d=> d.x)
+                    .y(d => d.y);
                 
                 var lineSVG = lineFunc(lineData)
                 return lineSVG 
@@ -386,7 +471,7 @@ function drawGauge(opt) {
     var pathNeedle = needleCalc();
 
     //Add a group to hold the needle path
-    var needleGroup = svg.append("svg:g")
+    var needleGroup = svg.append("g")
         .attr("id","needle")
     
     //Draw the needle path
@@ -399,9 +484,9 @@ function drawGauge(opt) {
 
 
     //Add Title
-    var titleLabels = svg.append("svg:g")
+    var titleLabels = svg.append("g")
                 .attr("id", "logoLabel")
-    var titleLabel = titleLabels.selectAll("text")
+    titleLabels.selectAll("text")
                 .data([0])
                 .enter().append("text")
                 .attr("x",opt.titleOffsetX)
@@ -518,8 +603,8 @@ function drawGauge(opt) {
     }
 }
 
+//Turns an angle in degrees to radians
 function dToR(angleDeg){
-    //Turns an angle in degrees to radians
     var angleRad = angleDeg * (Math.PI / 180); 
     return angleRad;
 }
